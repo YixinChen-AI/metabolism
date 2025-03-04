@@ -16,6 +16,7 @@ Multi-organ metabolic analysis framework
       - 可分割CT全身，部分MR组织
 # 0 准备
 ## 0.1 数据集格式
+请务必用这样的格式进行准备，后续的分析都会基于这样的结果进行。
 ```bash
 输入结构：
 dicom_dataset/
@@ -40,7 +41,7 @@ nifti_dataset/
 # 支持pypi
 pip install metabolism
 ```
-# 1. DICOM to NIfTI Conversion Tool
+# 1. DICOM to NIfTI Conversion Tool (metabolism.DcmWorker)
 ## 1.1 功能概述
 本工具提供医学影像数据(DICOM格式)的自动化批处理解决方案，支持以下核心功能：
 1. **多模态转换**
@@ -72,5 +73,12 @@ pipeline可以设置不同处理内容。
 - "DynamicPET"：将动态PET转换成nifti；
 - "PETSUV"：将静态PET根据bodyweight的设置方法转换成SUV nifti；
 
-# 2. 对CT或者PET影像的分割
-Soooooooooooooooon
+# 2. 对CT或者PET影像的分割（metabolism.Segmentor）
+## 2.1 功能概述
+一个医学影像分割工具，主要用于处理NIFTI格式的CT图像数据
+1. **环境诊断模块**
+   - 自动检测PyTorch框架的安装状态及GPU硬件支持情况
+2. **通过check_pytorch_environment函数**
+   - 支持单文件推理（inference方法）和批量处理（inference_all方法）
+  
+## 2.2 如何使用
