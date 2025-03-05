@@ -5,18 +5,12 @@ Multi-organ metabolic analysis framework
 ---
 1. 功能1：DICOM to NIfTI Conversion Tool
 2. 功能2：对CT或者PET影像的分割
-   2.1 MPUM
-      - 请引用：Modality-Projection Universal Model for Comprehensive Full-Body Medical Imaging Segmentation
-      - 可分割CT脑区、分割CT全身、分割PET脑区、分割PET全身，部分MR组织
-   2.2 TotalSegmentator:
-      - 请引用：TotalSegmentator: robust segmentation of 104 anatomic structures in CT images
-      - 可分割CT全身，部分MR组织
-   2.3 MOOSE:
-      - 请引用：Fully-automated, semantic segmentation of whole-body 18F-FDG PET/CT images based on data-centric artificial intelligence
-      - 可分割CT全身，部分MR组织
+3. 功能3：对构建reference network的正常人数量进行稳定性分析
+4. 
+   
 # 0 准备
 ## 0.1 数据集格式
-请务必用这样的格式进行准备，后续的分析都会基于这样的结果进行。
+请务必用这样的格式进行准备，后续的分析都会基于这样的结果进行。总之需要三级结构，并不严格要求是---case---series的序列.
 ```bash
 输入结构：
 dicom_dataset/
@@ -80,5 +74,24 @@ pipeline可以设置不同处理内容。
    - 自动检测PyTorch框架的安装状态及GPU硬件支持情况
 2. **通过check_pytorch_environment函数**
    - 支持单文件推理（inference方法）和批量处理（inference_all方法）
-  
+3. **支持模型清单**
+   - MPUM 
+      - 请引用：Modality-Projection Universal Model for Comprehensive Full-Body Medical Imaging Segmentation
+      - 可分割CT脑区、分割CT全身、分割PET脑区、分割PET全身，部分MR组织
+   - TotalSegmentator (soon):
+      - 请引用：TotalSegmentator: robust segmentation of 104 anatomic structures in CT images
+      - 可分割CT全身，部分MR组织
+   - MOOSE (soon):
+      - 请引用：Fully-automated, semantic segmentation of whole-body 18F-FDG PET/CT images based on data-centric artificial intelligence
+      - 可分割CT全身，部分MR组织
 ## 2.2 如何使用
+```
+from metabolism import Segmentor
+segmentor = Segmentor()
+segmentor.load_model(modelname="mpum")
+segmentor.inference_all(nifti_dataset="<输入nifti_dataset的路径>",
+                       targetpart="brain")
+```
+细节：
+1. 输入的nifti_dataset路径同样要求3级目录，与DcmWorker的输出目录路径结构一致；
+2. 推理的分割结果会与.nii.gz文件在同一目录下面，分割结果会在f'{modelname}#{niftiname}'的文件夹中。
