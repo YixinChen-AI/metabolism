@@ -3,10 +3,10 @@ Multi-organ metabolic analysis framework
 
 
 ---
-1. 功能1：DICOM to NIfTI Conversion Tool
-2. 功能2：对CT或者PET影像的分割
-3. 功能3：对构建reference network的正常人数量进行稳定性分析
-4. 功能4：Traditional Group-level metabolic network
+1. 功能1：DICOM to NIfTI Conversion Tool （metabolism.DcmWorker）
+2. 功能2：对CT或者PET影像的分割 （metabolism.Segmentor）
+3. 功能3：对构建reference network的正常人数量进行稳定性分析（metabolism.StabilityTester）
+4. 功能4：Traditional Group-level metabolic network （metabolism.MetabolicNetworks.GroupLevelNetwork）
    
 # 0 准备
 ## 0.1 数据集格式
