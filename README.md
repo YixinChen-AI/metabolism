@@ -119,3 +119,29 @@ df = stabilityTester.analyze(dataset = "/share/home/yxchen/dataset/metabolism_da
 1. step1将分割结果和PET SUV进行特征提取，提取出每一个roi的relative meansuv；
 2. step2将提出出来的relative meansuv进行稳定性分析。数据集有N个样本，随机抽取n个样本(n<N),N样本计算的partial correlation matrix和n样本计算的计算相似度。以此来确定多少reference group和control group的合理划分。
 3. 这里的数据结构是2级结构。
+   
+# 4. metabolism.StabilityTester
+## 4.1 功能概述
+![image](https://github.com/user-attachments/assets/dbe1ae8d-da1b-4b8c-b888-150a7bb8f175)
+Reference Paper: Individual-specific metabolic network based on 18F-FDG PET revealing multi-level aberrant metabolisms in Parkinson's disease
+
+## 4.2 如何使用
+```
+from metabolism.MetabolicNetworks import GroupLevelNetwork
+from metabolism.StabilityTester import StabilityTester
+stabilityTester = StabilityTester()
+groupLevelNetwork = GroupLevelNetwork()
+# step 1
+# stabilityTester.suvseg2feature(dataset = "/share/home/yxchen/dataset/metabolism_dataset/ADNI_preprocess/ADNI_CN/",
+#                          modelname="mpum")
+# stabilityTester.suvseg2feature(dataset = "/share/home/yxchen/dataset/metabolism_dataset/ADNI_preprocess/ADNI_AD/",
+#                          modelname="mpum")
+
+# step 2
+grouplevelnet = groupLevelNetwork.process(dataset1 = "/share/home/yxchen/dataset/metabolism_dataset/ADNI_preprocess/ADNI_CN/",
+                          dataset2 = "/share/home/yxchen/dataset/metabolism_dataset/ADNI_preprocess/ADNI_AD/",
+                         modelname="mpum")
+```
+细节：
+1. 两个数据集需要先进行stabilityTester的suvseg2feature的处理，也建议先进行稳定性分析；
+2. 鉴于公式中的分子没有使用绝对值，datset1和dataset2并非对称；
