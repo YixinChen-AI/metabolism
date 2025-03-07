@@ -10,24 +10,24 @@ Multi-organ metabolic analysis framework
    
 # 0 准备
 ## 0.1 数据集格式
-请务必用这样的格式进行准备，后续的分析都会基于这样的结果进行。总之需要三级结构，并不严格要求是---case---series的序列.
+请务必用这样的格式进行准备，后续的分析都会基于这样的结果进行。总之需要三级结构.
 ```bash
 输入结构：
 dicom_dataset/
-├─ case_001/
-│  ├─ CT_series_1/
-│  ├─ CT_series_2/
-│  ├─ PET_series_1/
+├─ control group/
+│  ├─ case_001#CT_series/
+│  ├─ case_002#CT_series/
+│  ├─ case_001#PET_series/
 │  └─ ......
-└─ case_002/
+└─ disease1 group/
 
 输出结构：
 nifti_dataset/
-├─ case_001/
-│  ├─ CT#series_1.nii.gz
-│  ├─ PET#series_1.nii.gz
-│  └─ SUVTBW#series_1.nii.gz
-└─ case_002/
+├─ control group/
+│  ├─ case_001#CT_series.nii.gz
+│  ├─ case_002#CT_series.nii.gz
+│  └─ case_001#PET_series.nii.gz
+└─ disease1 group/
 ```
 
 ## 0.2 如何安装
@@ -95,3 +95,27 @@ segmentor.inference_all(nifti_dataset="<输入nifti_dataset的路径>",
 细节：
 1. 输入的nifti_dataset路径同样要求3级目录，与DcmWorker的输出目录路径结构一致；
 2. 推理的分割结果会与.nii.gz文件在同一目录下面，分割结果会在f'{modelname}#{niftiname}'的文件夹中。
+
+# 3. 稳定性分析
+## 3.1 功能概述
+- 从SUV图像与分割掩膜中提取ROI特征；
+- 自动生成标准化摄取值比(SUVR)
+- 数据质量筛查：自动检测NaN/Inf异常值
+- 基于残差的偏相关计算（年龄/性别/体重协变量控制）
+- 相关系数矩阵相似度评估（全数据 vs 子样本）
+
+## 3.2 如何使用
+```
+from metabolism.StabilityTester import StabilityTester
+stabilityTester = StabilityTester()
+# step1
+stabilityTester.suvseg2feature(dataset = "/share/home/yxchen/dataset/metabolism_dataset/ADNI_preprocess/ADNI_CN/",
+                         modelname="mpum")
+# step2
+df = stabilityTester.analyze(dataset = "/share/home/yxchen/dataset/metabolism_dataset/ADNI_preprocess/ADNI_CN/",
+                         modelname="mpum")
+```
+细节：
+1. step1将分割结果和PET SUV进行特征提取，提取出每一个roi的relative meansuv；
+2. step2将提出出来的relative meansuv进行稳定性分析。数据集有N个样本，随机抽取n个样本(n<N),N样本计算的partial correlation matrix和n样本计算的计算相似度。以此来确定多少reference group和control group的合理划分。
+3. 这里的数据结构是2级结构。
