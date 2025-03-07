@@ -6,7 +6,7 @@ Multi-organ metabolic analysis framework
 1. 功能1：DICOM to NIfTI Conversion Tool
 2. 功能2：对CT或者PET影像的分割
 3. 功能3：对构建reference network的正常人数量进行稳定性分析
-4. 
+4. 功能4：Traditional Group-level metabolic network
    
 # 0 准备
 ## 0.1 数据集格式
@@ -96,7 +96,7 @@ segmentor.inference_all(nifti_dataset="<输入nifti_dataset的路径>",
 1. 输入的nifti_dataset路径同样要求3级目录，与DcmWorker的输出目录路径结构一致；
 2. 推理的分割结果会与.nii.gz文件在同一目录下面，分割结果会在f'{modelname}#{niftiname}'的文件夹中。
 
-# 3. 稳定性分析
+# 3. 稳定性分析 （metabolism.StabilityTester）
 ## 3.1 功能概述
 - 从SUV图像与分割掩膜中提取ROI特征；
 - 自动生成标准化摄取值比(SUVR)
