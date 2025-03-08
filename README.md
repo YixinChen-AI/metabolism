@@ -3,7 +3,7 @@ Multi-organ metabolic analysis framework
 
 - 本项目上线notebook教程
 
-[Tutorial Notbook]](https://github.com/YixinChen-AI/metabolism/blob/main/tutorial.ipynb)
+[[Tutorial Notbook]](https://github.com/YixinChen-AI/metabolism/blob/main/tutorial.ipynb)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YixinChen-AI/metabolism/blob/main/tutorial.ipynb)
 
