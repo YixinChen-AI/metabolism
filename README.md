@@ -1,8 +1,7 @@
 # metabolism
 Multi-organ metabolic analysis framework
 
-# 项目名称
-
+- 本项目上线colab教程
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/YixinChen-AI/metabolism/blob/main/tutorial.ipynb)
 
 📌 **一键运行效果**：点击上方 <img src="https://colab.research.google.com/assets/colab-badge.svg" width="100" alt="Open in Colab"> 徽章，可直接在 Google Colab 中打开本项目的 Jupyter Notebook 并运行代码。
